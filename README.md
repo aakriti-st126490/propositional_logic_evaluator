@@ -16,7 +16,7 @@ Result:  t
 Prefix:  v t ^ f f
 ```
 
-`^` binds more tightly than `v`, so `t v f ^ f` is read as `t v (f ^ f)`, not `(t v f) ^ f`.
+`^` has higher precedence than `v`, so `t v f ^ f` is read as `t v (f ^ f)`, not `(t v f) ^ f`.
 
 ---
 
