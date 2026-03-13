@@ -82,7 +82,7 @@ The flow when you press Evaluate:
 input string  →  PropLexer  →  token stream  →  PropParser  →  AST  →  .evaluate() / .prefix()
 ```
 
-The parser never computes anything directly — it just builds a tree. `evaluate()` and `prefix()` are methods on the tree nodes, so adding a new kind of output (a truth table, CNF form, etc.) only requires adding a new method, not touching the parser.
+The parser never computes anything directly : it just builds a tree. `evaluate()` and `prefix()` are methods on the tree nodes, so adding a new kind of output (a truth table, CNF form, etc.) only requires adding a new method, not touching the parser.
 
 ---
 
