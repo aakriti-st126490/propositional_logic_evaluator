@@ -1,0 +1,110 @@
+Grammar:
+
+Rule 0     S' -> statement
+Rule 1     statement -> expr
+Rule 2     expr -> FALSE
+Rule 3     expr -> TRUE
+Rule 4     expr -> expr AND expr  [precedence=left, level=2]
+Rule 5     expr -> expr OR expr  [precedence=left, level=1]
+
+Terminals, with rules where they appear:
+
+AND                  : 4
+FALSE                : 2
+OR                   : 5
+TRUE                 : 3
+error                : 
+
+Nonterminals, with rules where they appear:
+
+expr                 : 1 4 4 5 5
+statement            : 0
+
+
+state 0
+
+    (0) S' -> . statement
+    (1) statement -> . expr
+    (2) expr -> . FALSE
+    (3) expr -> . TRUE
+    (4) expr -> . expr AND expr
+    (5) expr -> . expr OR expr
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 4
+
+    statement                      shift and go to state 1
+    expr                           shift and go to state 2
+
+state 1
+
+    (0) S' -> statement .
+
+
+state 2
+
+    (1) statement -> expr .
+    (4) expr -> expr . AND expr
+    (5) expr -> expr . OR expr
+    $end            reduce using rule 1 (statement -> expr .)
+    AND             shift and go to state 5
+    OR              shift and go to state 6
+
+
+state 3
+
+    (2) expr -> FALSE .
+    AND             reduce using rule 2 (expr -> FALSE .)
+    OR              reduce using rule 2 (expr -> FALSE .)
+    $end            reduce using rule 2 (expr -> FALSE .)
+
+
+state 4
+
+    (3) expr -> TRUE .
+    AND             reduce using rule 3 (expr -> TRUE .)
+    OR              reduce using rule 3 (expr -> TRUE .)
+    $end            reduce using rule 3 (expr -> TRUE .)
+
+
+state 5
+
+    (4) expr -> expr AND . expr
+    (2) expr -> . FALSE
+    (3) expr -> . TRUE
+    (4) expr -> . expr AND expr
+    (5) expr -> . expr OR expr
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 4
+
+    expr                           shift and go to state 7
+
+state 6
+
+    (5) expr -> expr OR . expr
+    (2) expr -> . FALSE
+    (3) expr -> . TRUE
+    (4) expr -> . expr AND expr
+    (5) expr -> . expr OR expr
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 4
+
+    expr                           shift and go to state 8
+
+state 7
+
+    (4) expr -> expr AND expr .
+    (4) expr -> expr . AND expr
+    (5) expr -> expr . OR expr
+    AND             reduce using rule 4 (expr -> expr AND expr .)
+    OR              reduce using rule 4 (expr -> expr AND expr .)
+    $end            reduce using rule 4 (expr -> expr AND expr .)
+
+
+state 8
+
+    (5) expr -> expr OR expr .
+    (4) expr -> expr . AND expr
+    (5) expr -> expr . OR expr
+    OR              reduce using rule 5 (expr -> expr OR expr .)
+    $end            reduce using rule 5 (expr -> expr OR expr .)
+    AND             shift and go to state 5
